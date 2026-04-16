@@ -43,6 +43,9 @@ def file_upload_tab():
                         sum_res = requests.post(f"{API_URL}/summary", json={"file_path": data['file_path']})
                         if sum_res.status_code == 200:
                             st.session_state['summary_data'] = sum_res.json()
+                            st.rerun() # Refresh so the executive summary tab unlocks
+                        else:
+                            st.error(f"Summary Generation Failed: {sum_res.text}")
                     else:
                         st.error(f"Error: {res.text}")
                 except Exception as e:
